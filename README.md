@@ -34,47 +34,10 @@ These values can be supplied via `appsettings.json`, user secrets, environment v
 
 To make tests deterministic the code accepts an `ITcpClientFactory` so tests can provide a `TcpClient` already connected to a test backend or a fake implementation.
 
-## Running
-
-To build the solution:
-
-```
-dotnet build
-```
-
-To run the echo backend locally (example):
-
-```
-cd SimpleBackendService
-dotnet run -- 5001
-```
-
-To run the load balancer (set `Backends` in `appsettings.json` or provide configuration):
-
-```
-cd LoadBalancer
-dotnet run
-```
-
-To run tests:
-
-```
-dotnet test LoadBalancerUnitTests
-```
-
-## Tests
-
-- Selector tests validate selection logic (e.g. `RoundRobinSelector`).
-- `ClientListener` tests run the `ExecuteAsync` loop against a short-lived listener and verify `IBackendManager` is invoked (mocks provided via `Moq`).
-- `BackendManager` tests validate parsing of backends, selector initialization, and startup behavior. Tests exercise the `ITcpClientFactory` injection so real socket connections can be avoided or controlled.
-- `DataTransfer` tests validate bidirectional data relay, error handling, and connection closure scenarios using mock TCP clients and memory streams.
-
 ## Notes and potential improvements
-
+- Health checks and retry/backoff behavior for backends.
+- More robustness to allow for automatic reconnection to a different backend server when a connection goes down
+- A more complicated backend selector that uses history and stickiness to keep the same clients connecting to the same backend server for a period of time
 - The `DataTransfer` class can be extended to support protocol-specific transformations or logging at the data level.
-- The `ITcpClientFactory` abstraction was added to simplify unit testing. You may extend it to create `NetworkStream` wrappers or to inject fake streams for fully in-memory tests.
-- Consider adding health checks and retry/backoff behavior for backends.
 
-If you want, I can:
-- Add a simple `docker-compose` sample to run multiple `SimpleBackendService` instances and the load balancer.
-- Add support for protocol-level filtering or transformation.
+

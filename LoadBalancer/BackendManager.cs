@@ -1,7 +1,5 @@
 ﻿using LoadBalancer.BackendSelectors;
-using Microsoft.Extensions.Logging;
 using System.Net;
-using System.Net.Sockets;
 
 namespace LoadBalancer
 {
