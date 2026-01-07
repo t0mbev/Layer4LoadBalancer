@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="LoadBalancer/LoadBalancer.csproj" />
+  <Project Path="LoadBalancerUnitTests/LoadBalancerUnitTests.csproj" Id="c879c266-fc45-4f90-a47f-e0087bafccca" />
+  <Project Path="SimpleBackendService/SimpleBackendService.csproj" />
+</Solution>
